@@ -34,8 +34,8 @@ const Contact = () => {
       return;
     }
 
-    // Check if EmailJS is configured (checking both placeholder values and falsy states)
-    const isConfigured = 
+    // Check if EmailJS is configured with real keys
+    const isEmailJSConfigured = 
       emailjsConfig.serviceId && 
       emailjsConfig.serviceId !== 'YOUR_EMAILJS_SERVICE_ID' &&
       emailjsConfig.templateId && 
@@ -43,30 +43,55 @@ const Contact = () => {
       emailjsConfig.publicKey && 
       emailjsConfig.publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY';
 
-    if (!isConfigured) {
-      // EmailJS not configured — fallback to prefilled mailto
+    if (isEmailJSConfigured) {
+      try {
+        const emailjs = await import('@emailjs/browser');
+        await emailjs.sendForm(
+          emailjsConfig.serviceId,
+          emailjsConfig.templateId,
+          formRef.current,
+          emailjsConfig.publicKey
+        );
+        setStatus('success');
+        formRef.current.reset();
+        setTimeout(() => setStatus('idle'), 4000);
+        return;
+      } catch (error) {
+        console.error('EmailJS Error:', error);
+      }
+    }
+
+    // Direct online email submission via FormSubmit API (Sends directly to primary email)
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${personalInfo.emails.primary}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: `${firstName} ${lastName}`.trim(),
+          email: email,
+          message: message,
+          _subject: `Portfolio Message from ${firstName} ${lastName}`.trim(),
+          _template: 'table'
+        })
+      });
+
+      const resData = await response.json();
+      if (response.ok || resData.success === 'true' || resData.success === true) {
+        setStatus('success');
+        formRef.current.reset();
+      } else {
+        throw new Error(resData.message || 'Form submission failed');
+      }
+    } catch (error) {
+      console.error('Email Submission Error:', error);
+      // Fallback to prefilled mailto if offline or request fails
       const mailtoLink = `mailto:${personalInfo.emails.primary}?subject=Portfolio Contact from ${firstName} ${lastName}&body=${encodeURIComponent(`From: ${firstName} ${lastName}\nEmail: ${email}\n\n${message}`)}`;
       window.open(mailtoLink, '_blank');
       setStatus('success');
       formRef.current.reset();
-      setTimeout(() => setStatus('idle'), 3000);
-      return;
-    }
-
-    // EmailJS integration
-    try {
-      const emailjs = await import('@emailjs/browser');
-      await emailjs.sendForm(
-        emailjsConfig.serviceId,
-        emailjsConfig.templateId,
-        formRef.current,
-        emailjsConfig.publicKey
-      );
-      setStatus('success');
-      formRef.current.reset();
-    } catch (error) {
-      console.error('EmailJS Error:', error);
-      setStatus('error');
     }
 
     setTimeout(() => setStatus('idle'), 4000);
