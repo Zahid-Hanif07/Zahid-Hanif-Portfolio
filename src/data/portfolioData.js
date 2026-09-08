@@ -26,6 +26,7 @@ export const socialLinks = {
   github: "https://github.com/Zahid-Hanif07?tab=repositories",
   linkedin: "https://linkedin.com/in/zahidhanif",
   instagram: "https://instagram.com/zahidhanif",
+  whatsapp: "https://wa.me/923127652207?text=Hello%20Zahid,%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect!",
 };
 
 export const heroContent = {
