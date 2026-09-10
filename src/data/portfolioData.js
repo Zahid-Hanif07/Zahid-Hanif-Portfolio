@@ -185,6 +185,13 @@ export const contentCreation = {
 // Leadership Data
 export const leadershipList = [
   {
+    title: "Mobile Application Developer (Flutter) — House of Tech Services, Albuquerque",
+    description:
+      "Worked on cross-platform mobile application development using Flutter and Dart, contributing effectively as a key team member to deliver high-quality mobile solutions.",
+    role: "Mobile Application Developer (Flutter)",
+    badge: "Work Experience",
+  },
+  {
     title: "Flutter Developer Intern — VirtueNetz, Rahim Yar Khan",
     description:
       "Contributed to development of an internal task management system used company-wide. Implemented role-based authentication, integrated Firebase services, and built Syncfusion Charts dashboards for project analytics.",
@@ -224,9 +231,24 @@ export const leadershipList = [
 // Internships Data
 export const internshipsList = [
   {
+    organization: "House of Tech Services, Albuquerque",
+    role: "Mobile Application Developer (Flutter)",
+    duration: "Jul 2025 – Aug 2026",
+    badge: "Work Experience",
+    skills: [
+      "Cross-Platform App Development",
+      "Flutter & Dart Architecture",
+      "Mobile UI & UX Implementation",
+      "Team Collaboration & Delivery",
+      "Performance & Code Optimization",
+    ],
+    tech: ["Flutter", "Dart", "Cross-Platform", "REST APIs", "Git"],
+  },
+  {
     organization: "VirtueNetz, Rahim Yar Khan",
     role: "Flutter Developer Intern",
     duration: "Apr 2025 – Jul 2025",
+    badge: "Internship",
     skills: [
       "Role-Based Authentication",
       "Real-time Data Sync",

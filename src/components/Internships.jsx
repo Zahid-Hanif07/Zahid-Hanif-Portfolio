@@ -13,7 +13,7 @@ const InternshipCard = ({ intern, index }) => (
           {intern.duration}
         </span>
         <span className="bg-white/10 text-white text-[10px] font-black tracking-widest uppercase py-1 px-3 rounded-full border border-white/15">
-          Internship
+          {intern.badge || "Internship"}
         </span>
       </div>
       <h3 className="text-white text-2xl font-black mb-1 tracking-tight">
@@ -70,12 +70,12 @@ const Internships = () => {
             Work Experience
           </h2>
           <p className="text-red-100 text-base md:text-lg font-semibold max-w-lg mx-auto">
-            Practical internships where I applied engineering principles and built real-world assets.
+            Practical experience & internships where I applied engineering principles and built real-world assets.
           </p>
         </div>
 
         {/* Internship Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
           {internshipsList.map((intern, index) => (
             <InternshipCard key={intern.organization} intern={intern} index={index} />
           ))}
